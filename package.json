@@ -1,0 +1,97 @@
+{
+    "name": "code-generator",
+    "displayName": "Code Generator",
+    "description": "This Extension allows to quickly create new files based on defined templates.",
+    "version": "1.3.0",
+    "author": "banxi",
+    "publisher": "banxi",
+    "homepage": "https://github.com/banxi1988/vscode-code-generator",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/banxi1988/vscode-code-generator.git"
+    },
+    "license": "MIT",
+    "engines": {
+        "vscode": "^1.18.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./out/extension",
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "VSCode Code Generator Configuration",
+            "properties": {
+                "fileTemplates.author": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "default": null,
+                    "description": "Value to use to replace #{author} variable."
+                },
+                "fileTemplates.company": {
+                    "type": [
+                        "string",
+                        "null"
+                    ],
+                    "default": null,
+                    "description": "Value to use to replace #{company} variable."
+                }
+            }
+        },
+        "commands": [
+            {
+                "command": "gen.fileFromTemplate",
+                "title": "New File from template",
+                "category": "Files"
+            },
+            {
+                "command": "gen.templateFromFile",
+                "title": "New Template from file",
+                "category": "Files"
+            },
+            {
+                "title": "Create '.code-generator-templates' Folder",
+                "category": "Gen",
+                "command": "gen.createTemplatesFolder"
+            }
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "command": "gen.fileFromTemplate"
+                }
+            ],
+            "editor/context": [
+                {
+                    "command": "gen.templateFromFile"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "lint": "tslint -c tslint.json src/**/*.ts",
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install"
+    },
+    "devDependencies": {
+        "@types/fs-extra": "^5.0.2",
+        "@types/mocha": "^2.2.42",
+        "@types/node": "^7.0.43",
+        "tslint": "^5.10.0",
+        "typescript": "^2.8.3",
+        "vscode": "^1.1.17"
+    },
+    "dependencies": {
+        "fs-extra": "^6.0.1",
+        "moment": "^2.22.1",
+        "nunjucks": "^3.1.2"
+    }
+}
