@@ -12,3 +12,4 @@ tslint.json
 tsfmt.json
 package-lock.json
 vsc-extension-quickstart.md
+*.vsix
