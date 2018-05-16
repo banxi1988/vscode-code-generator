@@ -5,6 +5,7 @@
     "version": "0.1.0",
     "author": "banxi",
     "publisher": "banxi",
+    "icon": "images/logo.png",
     "homepage": "https://github.com/banxi1988/vscode-code-generator",
     "repository": {
         "type": "git",
