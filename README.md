@@ -10,11 +10,7 @@ the initial code base on https://github.com/brpaz/vscode-file-templates-ext
 6. Normaly files in `.code-generator-templates` are single file templates. you can also put your group of templates file in the `@groups` folder.
 7. **Note**: when create group of file from group templates,you should select a dest folder first.
 8. Moreover,you can also store all of your templates and data file in a global folder. 
-
-## Available Commands
-
-* Create a new file from a template
-* Create a new template from an existing file.
+9. the template engine the extension used is [nunjunks](https://mozilla.github.io/nunjucks/getting-started.html).
 
 ## Screenshots
 
@@ -27,46 +23,27 @@ On Visual Studio code, Press F1 to open the command menu and type ```ext install
 **This extension was only tested on Mac. If you have a Linux or Windows and find some issue, please create a PR.**
 
 
-## Variables
 
-Variables can now be used in templates in the following way:
+## Global Templates Location.
 
-```
-normal text #{variable_name}
-```
-
-When a file is created from the template, the user is prompted with a value to put here.
-
-### Predefined variables
-
-*  ```filename``` the output filename.
-
-## Templates Location.
-
-By default, this extension expects the file templates to be placed at the following location, depending of youur OS:
+By default, this extension expects the global file templates to be placed at the following location, depending of youur OS:
 
 Linux:
 
 ```
-$HOME/.config/Code/User/FileTemplates
+$HOME/.config/Code/User/CodeGeneratorTemplates
 ```
 
 Mac:
 
 ```
-$HOME/Library/Application Support/Code/User/FileTemplates
+$HOME/Library/Application Support/Code/User/CodeGeneratorTemplates
 ```
 
 Windows:
 
 ```
-C:\Users\User\AppData\Roaming\Code\User\FileTemplates
-```
-
-However, you can change the default location by adding the following to your user or workspace settings:
-
-```
-"fileTemplates.templates_dir": "path/to/my/templates"
+C:\Users\User\AppData\Roaming\Code\User\CodeGeneratorTemplates
 ```
 
 ## Contributing
