@@ -2,10 +2,12 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
-import createDefaultTemplatesFolder from "./commands/createDefaultTemplatesFolderCommand";
+import BaseTemplateCommand from "./commands/BaseTemplateCommand";
 import FileFromTemplateCommand from "./commands/fileFromTemplateCommand";
+import { genGroupFromLocalTemplates } from "./commands/genGroupFromLocalTemplates";
 import TemplateFromFileCommand from "./commands/templateFromFileCommand";
-import TemplatesManager from "./templatesManager";
+import getGlobalTemplatesDir from "./getGlobalTemplatesDir";
+import TemplatesManager from "./TemplatesManager";
 
 /**
  * Main extension entry point.
@@ -16,23 +18,26 @@ import TemplatesManager from "./templatesManager";
 export function activate(context: vscode.ExtensionContext) {
 
     // Initializes the template manager.
-    const templatesManager = new TemplatesManager(vscode.workspace.getConfiguration("fileTemplates"));
-    templatesManager.createTemplatesDirIfNotExists();
+    const globalManager = new TemplatesManager(getGlobalTemplatesDir());
+    const localManager = TemplatesManager.local;
+    const templateCommands = Array<BaseTemplateCommand>();
+    templateCommands.push(
+        new FileFromTemplateCommand(globalManager, "gen.fileFromGlobalTemplate"),
+        new TemplateFromFileCommand(globalManager, "gen.globalTemplateFromFile"),
+        new FileFromTemplateCommand(localManager, "gen.fileFromTemplate"),
+        new TemplateFromFileCommand(localManager, "gen.templateFromFile"),
+    );
+    for (const templateCommand of templateCommands) {
+        const commandFunc = templateCommand.run.bind(templateCommand);
+        const disposable = vscode.commands.registerCommand(templateCommand.command, commandFunc);
+        context.subscriptions.push(disposable);
+    }
 
-    // register extension commands
-    const fftCommand = new FileFromTemplateCommand(templatesManager);
-    const fftCommandDisposable = vscode.commands.registerCommand("gen.fileFromTemplate", (args) => {
-        fftCommand.run(args);
-    });
-    context.subscriptions.push(fftCommandDisposable);
-
-    const tffCommand =  new TemplateFromFileCommand(templatesManager);
-    const tffCommandDisposable = vscode.commands.registerCommand("gen.templateFromFile", (args) => {
-        tffCommand.run(args);
-    });
-    context.subscriptions.push(tffCommandDisposable);
     context.subscriptions.push(
-        vscode.commands.registerCommand("gen.createTemplatesFolder", createDefaultTemplatesFolder)
+        vscode.commands.registerCommand("gen.createTemplatesFolder", (args) => {
+            localManager.ensureTemplatesFolder(true);
+        }),
+        vscode.commands.registerCommand("gen.createGroupFromLocalTemplate", genGroupFromLocalTemplates)
     );
 
 }

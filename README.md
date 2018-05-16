@@ -1,6 +1,16 @@
 # VSCode Code Generator Extension
 the initial code base on https://github.com/brpaz/vscode-file-templates-ext
 
+## Usage
+1. You can use `Gen:Create '.code-generator-templates' Folder` command to create default local workspace templates folder.
+2. Once the templates folder created. there are a `template_common_data.json` file is also created. and a `@groups` folder also created.
+3. When render template we need some data. so you can put your common data in the `template_common_data.json` file.
+4. You can also use your current active editor's selection or the whole document text as an template data.
+5. if you use your editor's text as template data, then it should be JSON format.
+6. Normaly files in `.code-generator-templates` are single file templates. you can also put your group of templates file in the `@groups` folder.
+7. **Note**: when create group of file from group templates,you should select a dest folder first.
+8. Moreover,you can also store all of your templates and data file in a global folder. 
+
 ## Available Commands
 
 * Create a new file from a template
@@ -14,16 +24,8 @@ the initial code base on https://github.com/brpaz/vscode-file-templates-ext
 
 On Visual Studio code, Press F1 to open the command menu and type ```ext install code-generator```.
 
-**This extension was only tested on Linux. If you have a Mac or Windows and find some issue, please create a PR.**
+**This extension was only tested on Mac. If you have a Linux or Windows and find some issue, please create a PR.**
 
-## Usage
-
-* In VSCode, right click on the folder where you want to generate the new file. You should see an option "Files : New from template". 
-Selecting this option a list of available templates should appear. Just select your template and the file will be created.
-
-* You can also do the same from the Command Palette. In this case the new file will be created in the root directory of the project.
-
-* Its also possible to do the other way around and create a template based on an open file. For that "right-click" on any opened file and you should see the option of the context menu.
 
 ## Variables
 

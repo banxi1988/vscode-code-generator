@@ -1,5 +1,6 @@
 "use strict";
 import child_process = require("child_process");
+import { MessageItem, window } from "vscode";
 
 /**
  * Helper funcion for open a folder in Explorer
@@ -23,4 +24,15 @@ export function openFolderInExplorer(folder) {
     if (command != null) {
         child_process.exec(command);
     }
+}
+
+export function showEmptyFolderTip(folder: string) {
+    const optionGoToTemplates: MessageItem = {
+        title: `you want to open ${folder}`
+    };
+    window.showInformationMessage(`${folder} was empty`, optionGoToTemplates).then((option) => {
+        if (option) {
+            openFolderInExplorer(folder);
+        }
+    });
 }
